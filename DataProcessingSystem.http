@@ -1,2 +1,13 @@
 @DataProcessingSystem_HostAddress = http://localhost:5056
 
+POST {{DataProcessingSystem_HostAddress}}/tasks
+Content-Type: application/json
+
+{
+  "fileName": "sprzedaz.csv",
+  "content": "produkt,ilosc,cena\nKawa,3,12.50\nHerbata,5,8.00\nKawa,2,12.50"
+}
+
+###
+
+GET {{DataProcessingSystem_HostAddress}}/tasks/35698013-f47e-479f-a178-af30dbc85c44

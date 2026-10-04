@@ -15,8 +15,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Nowy folder\" />
-  </ItemGroup>
-
 </Project>
