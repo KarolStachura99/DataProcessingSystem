@@ -2,7 +2,12 @@
 
 namespace DataProcessingSystem.Services;
 
-public record CsvAnalysisResult(int RowCount, int TotalQuantity, decimal TotalRevenue, string TopProduct);
+public record CsvAnalysisResult(
+    int RowCount,
+    int TotalQuantity,
+    decimal TotalRevenue,
+    string TopProduct,
+    Dictionary<string, decimal> RevenueByProduct);
 
 public static class CsvAnalyzer
 {
@@ -49,6 +54,6 @@ public static class CsvAnalyzer
 
         var topProduct = revenueByProduct.MaxBy(p => p.Value).Key;
 
-        return new CsvAnalysisResult(lines.Length - 1, totalQuantity, totalRevenue, topProduct);
+        return new CsvAnalysisResult(lines.Length - 1, totalQuantity, totalRevenue, topProduct, revenueByProduct);
     }
 }

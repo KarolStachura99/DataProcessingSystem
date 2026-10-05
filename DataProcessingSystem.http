@@ -1,13 +1,19 @@
 @DataProcessingSystem_HostAddress = http://localhost:5056
 
+# @name createTask
 POST {{DataProcessingSystem_HostAddress}}/tasks
-Content-Type: application/json
+Content-Type: multipart/form-data; boundary=granica
 
-{
-  "fileName": "sprzedaz.csv",
-  "content": "produkt,ilosc,cena\nKawa,3,12.50\nHerbata,5,8.00\nKawa,2,12.50"
-}
+--granica
+Content-Disposition: form-data; name="file"; filename="sprzedaz.csv"
+Content-Type: text/csv
+
+produkt,ilosc,cena
+Kawa,3,12.50
+Herbata,5,8.00
+Kawa,2,12.50
+--granica--
 
 ###
 
-GET {{DataProcessingSystem_HostAddress}}/tasks/6d870134-62c6-4e26-aaff-9e8322734d96
+GET {{DataProcessingSystem_HostAddress}}/tasks/{{createTask.response.body.$.id}}
