@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using DataProcessingSystem.Data;
 using DataProcessingSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using DataProcessingSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddHostedService<TaskProcessingWorker>();
 
 var app = builder.Build();
 
@@ -56,7 +59,7 @@ app.MapGet("/tasks/{id:guid}", async (Guid id, AppDbContext db) =>
         task.Id,
         task.FileName,
         task.Status,
-        task.Result,
+        Result = task.Result is null ? null : JsonSerializer.Deserialize<CsvAnalysisResult>(task.Result),
         task.Error,
         task.CreatedAt,
         task.CompletedAt
